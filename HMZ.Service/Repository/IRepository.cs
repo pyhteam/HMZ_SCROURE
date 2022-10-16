@@ -6,7 +6,7 @@
         Task<T> AddAsync(T entity);
         void UpdateAsync(T entity);
         void Delete(T entity);
-        Task<T> GetAsync(Guid id);
+        Task<T> GetAsync(string id);
         Task<List<T>> AddRangeAsync(List<T> list);
     }
 }

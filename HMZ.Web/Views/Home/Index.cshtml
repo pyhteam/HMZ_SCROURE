@@ -1,8 +1,49 @@
-﻿@{
+﻿@model IEnumerable<HMZ.Service.DTOs.Views.CategoryView>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="card">
+    <div class="card-header bg-success text-white">
+        Danh Sách Danh Mục
+        <a href="/Home/AddCategory" class="btn btn-primary btn-sm">
+            <i class="fa fa-plus"></i>
+            Thêm Mới
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover table-responsive">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Name</th>
+                    <th>Created Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope="row">@item.Name</td>
+                        <td>@item.CreatedDate</td>
+                        <td>
+                            @if (item.IsDeleted == true)
+                            {
+                                <span class="btn btn-success btn-sm">Active</span>
+                            }
+                            else
+                            {
+                                <span class="btn btn-Info btn-sm">Pending</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

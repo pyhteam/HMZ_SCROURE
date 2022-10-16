@@ -1,0 +1,51 @@
+﻿<div id="alert">
+
+</div>
+<div class="card">
+    <div class="card-header bg-success text-white">
+        Thêm Danh Mục
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Enter name category">
+        </div>
+        <div class="form-group">
+            <label for="">Description</label>
+            <input type="text" id="description" class="form-control" placeholder="Enter description category">
+        </div>
+        <button type="button" onclick="addCategory()" class="btn btn-success mt-2">Submit</button>
+    </div>
+</div>
+<script>
+    function addCategory() {
+        debugger;
+        let name = document.getElementById('name').value;
+        let description = document.getElementById('description').value;
+        $.ajax({
+            url: '/Home/AddCategory',
+            type: 'POST',
+            data: {
+                Name: name,
+                Description: description
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.statusCode == 200) {
+                    $('#alert').html('<div class="alert alert-success" role="alert">Thêm thành công</div>');
+                    setTimeout(function () {
+                        window.location.href = '/Home';
+                    }, 2000);
+                }
+                else {
+                    $('#alert').html('<div class="alert alert-danger" role="alert">Thêm thất bại</div>');
+                }
+
+            },
+            error: function (data) {
+                console.log(data);
+                $('#alert').html('<div class="alert alert-danger" role="alert">Loi</div>');
+            }
+        });
+    }
+</script>

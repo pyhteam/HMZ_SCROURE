@@ -33,7 +33,7 @@ namespace HMZ.Service.Services
             _dbContext.Set<T>().Remove(entity);
         }
 
-        public async Task<T> GetAsync(Guid id)
+        public async Task<T> GetAsync(string id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }

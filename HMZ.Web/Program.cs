@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHMZServices(builder.Configuration);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+builder.Services.AddHMZServices(builder.Configuration);
+
 
 var app = builder.Build();
 

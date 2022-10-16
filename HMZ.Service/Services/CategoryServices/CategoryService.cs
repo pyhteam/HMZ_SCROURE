@@ -1,4 +1,5 @@
 ﻿using HMZ.Data.Enities;
+using HMZ.Service.DTOs.Queries;
 using HMZ.Service.DTOs.Views;
 using HMZ.Service.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +8,11 @@ namespace HMZ.Service.Services.CategoryServices
 {
     public class CategoryService : BaseService, ICategoryService
     {
-        protected CategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 
-        public async Task<int> Create(CategoryView categoryView)
+        public async Task<int> Create(CategoryQuery categoryView)
         {
             if (categoryView == null)
             {
@@ -26,7 +27,7 @@ namespace HMZ.Service.Services.CategoryServices
             return await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(string id)
         {
             var category = await _unitOfWork.GetRepository<Category>().GetAsync(id);
             if (category == null)
@@ -52,10 +53,10 @@ namespace HMZ.Service.Services.CategoryServices
             return categories;
         }
 
-        public async Task<CategoryView> GetById(Guid id)
+        public async Task<CategoryView> GetById(string id)
         {
             var category = _unitOfWork.GetRepository<Category>().AsQueryable();
-            var categoryView = await category.Where(x => x.Id == id)
+            var categoryView = await category.Where(x => x.Id.ToString() == id)
             .Select(x => new CategoryView
             {
                 Id = x.Id,
@@ -68,13 +69,13 @@ namespace HMZ.Service.Services.CategoryServices
             return categoryView;
         }
 
-        public async Task<int> Update(CategoryView categoryView)
+        public async Task<int> Update(CategoryQuery categoryView, string id)
         {
-            if (categoryView == null)
+            if (id == null)
             {
                 return 0;
             }
-            var category = await _unitOfWork.GetRepository<Category>().GetAsync(categoryView.Id);
+            var category = await _unitOfWork.GetRepository<Category>().GetAsync(id);
             if (category == null)
             {
                 return 0;
